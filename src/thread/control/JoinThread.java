@@ -1,28 +1,22 @@
 package thread.control;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import thread.control.relation.Count;
 
 public class JoinThread{
 
-    private static int i = 0;
-
-    //有返回值得线程
-    public static class CallableThread implements Callable<Integer>{
-
-        @Override
-        public Integer call() throws Exception {
-            return i+1;
-        }
-    }
-
     public static void main(String[] args){
-        CallableThread callableThread = new CallableThread();
-        ExecutorService service = Executors.newCachedThreadPool();
-        for(int i=0; i<100; i++){
+        Count count = new Count();
+        Thread t1 = new Thread(count, "thread01");
+        Thread t2 = new Thread(count, "thread02");
+        t1.start();
+        t2.start();
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        System.out.print(count.getCount());
     }
-
 
 }

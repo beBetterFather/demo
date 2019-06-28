@@ -28,7 +28,7 @@ public class CallableFutureThread implements Callable {
             e.printStackTrace();
         }
         //FutureTask
-        FutureTask<String> futureTask = new FutureTask<String>(new CallableFutureThread());
+        FutureTask<Integer> futureTask = new FutureTask<Integer>(new CallableFutureThread());
         service.submit(futureTask);
         try {
             System.out.println(futureTask.get());
